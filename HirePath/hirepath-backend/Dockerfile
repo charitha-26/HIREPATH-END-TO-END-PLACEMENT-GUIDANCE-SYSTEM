@@ -1,14 +1,22 @@
-# Use lightweight Java runtime
-FROM eclipse-temurin:17-jdk-alpine
+# Stage 1: Build the application
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy jar file
-COPY target/hirepath-backend-0.0.1-SNAPSHOT.jar app.jar
+# Copy project files
+COPY . .
 
-# Expose port (Render/Heroku will override anyway)
+# Build the jar
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application
+FROM eclipse-temurin:17-jdk-alpine
+
+WORKDIR /app
+
+# Copy jar from builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Run the application
 ENTRYPOINT ["java","-jar","app.jar"]
