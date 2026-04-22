@@ -1,0 +1,13 @@
+package com.hirepath.repository;
+
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.hirepath.model.User;
+
+public interface UserRepository extends JpaRepository<User, Long>{
+
+	Optional<User> findByEmail(String email);
+}
