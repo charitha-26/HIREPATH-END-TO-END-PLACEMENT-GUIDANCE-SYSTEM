@@ -16,7 +16,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/placements")
-@CrossOrigin(origins = {"http://localhost:8081", "http://localhost:5173", "http://127.0.0.1:5173"})
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "http://localhost:8081",
+    "http://127.0.0.1:5173",
+    "https://hirepath-frontend.onrender.com"  // ADD THIS LINE
+})
 public class PlacementController {
 
     private final PlacementService service;
